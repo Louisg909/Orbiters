@@ -9,9 +9,9 @@ MASS=4000000
 mass=3000
 G=6.67408E-11
 timeFrameLength=10000 # time resolution
-pos=[200,400]
+pos=[200,300]
 POS=[200,200]
-vel=[0,-0]
+vel=[0.000521944364,-0]
 
 
 
@@ -23,7 +23,7 @@ def Orbiter(pos,POS,veloc,MASS,mass):
     acc=(G*MASS)/abs(rad)**2
     # getting the new velocity vector
     for i in range(2):
-        veloc[i]+=(acc*timeFrameLength)*((pos[i]-POS[i])/rad) #(pos[i]/rad) being to make it go towards the object
+        veloc[i]+=(acc*timeFrameLength)*((POS[i]-pos[i])/rad) #(pos[i]/rad) being to make it go towards the object
     # getting the new position
     for i in range(2):
         pos[i]+=veloc[i]*timeFrameLength
