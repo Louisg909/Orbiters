@@ -1,0 +1,81 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Orbiters}
+\author{Louis George}
+
+\begin{document}
+\maketitle
+\text{}
+\text{I start with the following code:}
+
+\begin{verbatim}
+MASS=400000
+mass=3000
+G=6.67408E-11
+timeFrameLength=1
+pos=[100,400]
+POS=[200,200]
+vel=[2,-1]
+\end{verbatim}
+\text{This is deciphered as the following:}
+\begin{align*}
+\text{Centre Mass} &=400000 \\
+\text{Orbiter Mass} &=3000 \\
+\text{Gravitational Constant} &= 6.67408\times10^{-11}\\
+\text{Time Resolution} &= 1\\
+\text{Orbiter Position} &=(100,400) \\
+\text{Centre Position} &=(200,200) \\
+\text{Orbiter Velocity} &= \begin{bmatrix} 2 \\ -1 \end{bmatrix}
+\end{align*}\\\\
+\text{The next block of code defines the function "Orbiter":}\\
+\begin{verbatim}
+    def Orbiter(pos,POS,veloc,MASS,mass):
+        # finding the orbital radius
+        rad=math.sqrt((POS[0]-pos[0])**2+(POS[1]-pos[1])**2)
+        # getting the acceleration
+        acc=(G*MASS)/abs(rad)**2
+        # getting the new velocity vector
+        for i in range(2):
+            veloc[i]+=(acc*timeFrameLength)*((POS[i]-pos[i])/rad) #(pos[i]/rad) 
+                        being to make it go towards the object
+        # getting the new position
+        for i in range(2):
+            pos[i]+=veloc[i]*timeFrameLength
+        return [pos,veloc]
+\end{verbatim}
+The first part of this code is working out the radius of the orbiter, using Pythagoras' Theorem:
+\\$R=\sqrt{\Delta x ^2 + \Delta y ^2}$
+\\\\\text{We then find the acceleration due to gravity using the following equation:}
+\\$g=G\frac{M}{R^2}$
+\\With $M$ being the mass at the centre, $g$ being the acceleration due to gravity and $R$ being the radius of the orbiter.
+\\\\The next part (the for loop) is getting the new velocity vector for this time-frame.
+\\
+\begin{align*}
+\vec{v}&=\vec{v}_0 + \vec{a} \Delta T\\
+\begin{bmatrix}\dot{x} \\ \dot{y}\end{bmatrix} &= \begin{bmatrix}\dot{x}_{0} \\\dot{y}_0\end{bmatrix}+\begin{bmatrix}\ddot{x} \\ \ddot{y}\end{bmatrix}\Delta T
+\end{align*}
+
+I separated the acceleration into its components by multiplying it by a unit vector:
+\\$\begin{bmatrix}\frac{\Delta x}{R} \\\frac{\Delta y}{R} \end{bmatrix}$
+\\\\Which points towards the centre object, worked out by finding the proportion each dimension contributes to the radius.
+\\\\After this we can work out the change in displacement:
+\\$\vec{s}=\vec{v}\Delta T$
+\\\\Finally, the first iteration the initial values are plugged into the function, and every time frame after that, the function is used with the previous values and the displacement is displayed.
+
+
+
+
+\end{document}
