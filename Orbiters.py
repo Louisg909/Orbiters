@@ -12,6 +12,9 @@ timeFrameLength=10000 # time resolution
 pos=[300,300]
 POS=[200,300]
 vel=[0.000,-0.0004]
+pos2=[400,300]
+vel2=[0,0.0004]
+mass2=3000
 
 
 
@@ -41,10 +44,10 @@ import pygamebg
 # initialise position and velocity
 (width, height) = (700, 400)
 canvas = pygamebg.open_window(width, height, "Orbiter")
-planets = [(pos[0],pos[1],vel[0],vel[1],10,"blue")]
+planets = [(pos[0],pos[1],vel[0],vel[1],10,"blue"),(pos2[0],pos2[1],vel2[0],vel2[1],10,"green")]
 
 def new_frame():
-    for i in range(1):
+    for i in range(2):
         x, y, dx, dy, r, color = planets[i]
         new=Orbiter([x,y],POS,[dx,dy],MASS,mass)
         x=new[0][0]
@@ -74,7 +77,7 @@ MASS=70000000
 mass=3000
 G=6.67408E-11
 timeFrameLength=10000 # time resolution
-pos=[300,300]
+pos=[200,300]
 POS=[200,300]
 vel=[0.000,-0.0004]
 VEL=[0,0]
@@ -82,6 +85,28 @@ VEL=[0,0]
 
 
 def Orbiter(pos,POS,veloc,MASS,mass):
+    """
+    Find the new position and velocity of an Orbiter
+
+    Parameters
+    ----------
+    pos : list
+        Position vector of the orbiter.
+    POS : list
+        Position vector of the centre object.
+    veloc : list
+        Velocity of the orbiter.
+    MASS : int
+        Mass of the centre object.
+    mass : int
+        Mass of the orbiter.
+
+    Returns
+    -------
+    list
+        Returns a list of two vectors, first being the new position vector and the second being the new velocity vector.
+
+    """
     # finding the orbital radius
     rad=math.sqrt(((pos[0]+POS[0])**2)+((pos[1]-POS[1])**2))
     # getting the acceleration
@@ -144,8 +169,39 @@ pygamebg.frame_loop(50, new_frame)
 
 
 
+#%%
 
+import random.randint as rand
 
+G=6.67408E-11
+timeFrameLength=10000 # time resolution
+POS=[200,300]
+MASS=70000000
+NOplanets=5
+planets=[[]]
+
+class Planet():
+    def __init__(self):
+        """
+        Initialising orbiter object
+
+        Parameters
+        ----------
+        mass : int
+            Mass of orbiter.
+        pos : list
+            Initial position of orbiter.
+        vel : list
+            Initial velocity of orbiter.
+
+        """
+        self.mass=rand(100,7000)
+        self.pos=[rand(0,700),rand(0,400)]
+        self.vel=[rand(-0.005,0.005),rand(-0.005,0.005)]
+        
+
+for n in range(NOplanets):
+    planets.append(Planet())
 
 
 
